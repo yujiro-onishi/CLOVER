@@ -30,7 +30,7 @@ def load_model(
     sample_steps=20,
 ):
     # CLIP text tokenizer / encoder
-    pretrained_model = "clip-vit-large-patch14"
+    pretrained_model = "openai/clip-vit-large-patch14"
     tokenizer = CLIPTokenizer.from_pretrained(pretrained_model_name_or_path = pretrained_model)
     text_encoder = CLIPTextModel.from_pretrained(pretrained_model_name_or_path = pretrained_model)
     text_encoder.requires_grad_(False)
@@ -70,7 +70,7 @@ def load_model(
 
     # Policy with VC-1 as RGB encoder
     from vc_models.models.vit import model_utils 
-    vision_encoder = model_utils.load_model(model_utils.VC1_BASE_NAME)
+    vision_encoder, _, _, _ = model_utils.load_model(model_utils.VC1_BASE_NAME)
     embd_size = 768
     policy_model = FeedbackDrivenPolicy(
                         vision_encoder = vision_encoder, 
@@ -96,11 +96,11 @@ def create_feedback_policy(
                             transforms.ToTensor(),
                             transforms.Normalize(mean=IMAGENET_DEFAULT_MEAN, std=IMAGENET_DEFAULT_STD),
                     ])
-    pretrained_model = "clip-vit-large-patch14"
+    pretrained_model = "openai/clip-vit-large-patch14"
     text_tokenizer = CLIPTokenizer.from_pretrained(pretrained_model_name_or_path = pretrained_model)
 
     from vc_models.models.vit import model_utils
-    vision_encoder = model_utils.load_model(model_utils.VC1_BASE_NAME)
+    vision_encoder, _, _, _ = model_utils.load_model(model_utils.VC1_BASE_NAME)
     embd_size = 768
 
 

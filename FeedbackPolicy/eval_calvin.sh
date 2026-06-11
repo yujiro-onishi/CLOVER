@@ -2,12 +2,12 @@
 export EVALUTION_ROOT=$(pwd)
 
 # Set CALVIN path
-calvin_dataset_path='path_to_your/calvin/dataset/task_ABC_D'
-calvin_conf_path="path_to_your/calvin/calvin_models/conf"
+calvin_dataset_path='/workspace/CLOVER/calvin/dataset/calvin_debug_dataset'
+calvin_conf_path="/workspace/CLOVER/calvin/calvin_models/conf"
 
 # Set checkpoints path
-visual_planner_checkpoint='path_to_your/visual_planner.pt'
-policy_checkpoint='path_to_your/feedback_policy.pth'
+visual_planner_checkpoint='/workspace/CLOVER/models/model-10.pt'
+policy_checkpoint='/workspace/CLOVER/FeedbackPolicy/checkpoint_final_weights.pth'
 
 export MESA_GL_VERSION_OVERRIDE=4.1
 node_num=4

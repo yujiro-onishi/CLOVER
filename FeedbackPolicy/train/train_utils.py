@@ -30,6 +30,7 @@ def get_autocast(precision):
     
 
 def get_ckpt_name(args, epoch=-1):
+    ckpt_name = 'checkpoint_'
     if epoch != -1:
         if epoch > 1000:
             ckpt_name += '{}_iter.pth'.format(epoch)

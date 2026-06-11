@@ -15,7 +15,7 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 
 from FeedbackPolicy.data.data import get_data
 from FeedbackPolicy.train.distributed import init_distributed_device, world_info_from_env
-from train_utils import  train_one_epoch_calvin, get_ckpt_name
+from train_utils import  train_one_epoch_calvin, get_ckpt_name, get_checkpoint
 from torch.distributed.elastic.multiprocessing.errors import record
 from transformers import (
     get_constant_schedule_with_warmup,
@@ -104,6 +104,7 @@ def main():
         help="Don't set device index from local rank (when CUDA_VISIBLE_DEVICES restricted to one per proc).",
     )
     # wandb args
+    parser.add_argument("--delete_previous_checkpoint", default=False, action="store_true")
     parser.add_argument("--report_to_wandb", default=False, action="store_true")
     parser.add_argument(
         "--wandb_project",
@@ -201,7 +202,10 @@ def main():
             torch.save(checkpoint_dict, ckpt_path)
             if args.delete_previous_checkpoint:
                 if epoch > 0:
-                    os.remove(ckpt_path)
+                    prev_ckpt_name = get_ckpt_name(args, epoch - 1)
+                    prev_ckpt_path = os.path.join(args.run_name, prev_ckpt_name)
+                    if os.path.exists(prev_ckpt_path):
+                        os.remove(prev_ckpt_path)
 
     if args.rank == 0:
         if not os.path.exists(args.run_name):

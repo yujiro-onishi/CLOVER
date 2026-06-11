@@ -638,12 +638,12 @@ class Trainer(object):
         # dataset and dataloader
         self.ds = train_set
         self.valid_ds = valid_set
-        dl = DataLoader(self.ds, batch_size = train_batch_size, shuffle = True, pin_memory = True, num_workers = 2)
+        dl = DataLoader(self.ds, batch_size = train_batch_size, shuffle = True, pin_memory = True, num_workers = 0)
 
 
         dl = self.accelerator.prepare(dl)
         self.dl = cycle(dl)
-        self.valid_dl = DataLoader(self.valid_ds, batch_size = valid_batch_size, shuffle = True, pin_memory = True, num_workers = 1)
+        self.valid_dl = DataLoader(self.valid_ds, batch_size = valid_batch_size, shuffle = True, pin_memory = True, num_workers = 0)
 
         # optimizer
         self.opt = AdamW(self.model.parameters(), lr = train_lr, betas = adam_betas, weight_decay = 0.)

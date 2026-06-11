@@ -46,7 +46,7 @@ def main(args, wandb = None):
     sampling_step = args.sampling_step
     window_size = args.sample_per_seq * sampling_step + sampling_step
     train_set = DiskCalvinDataset(
-        datasets_dir=Path('calvin/dataset/task_ABC_D') / "training",
+        datasets_dir=Path('calvin/dataset/calvin_debug_dataset') / "training",
         window_size=window_size,
         sampling_step=sampling_step,
         image_size=target_size[0],
@@ -54,7 +54,7 @@ def main(args, wandb = None):
     )
 
     valid_set = DiskCalvinDataset(
-        datasets_dir=Path('calvin/dataset/task_ABC_D') / "validation",
+        datasets_dir=Path('calvin/dataset/calvin_debug_dataset') / "validation",
         window_size=window_size,
         sampling_step=sampling_step,
         image_size=target_size[0],
